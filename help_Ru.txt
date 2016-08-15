@@ -1,0 +1,58 @@
+1.  Распаковать архив проекта ”OA_FileManager”. 
+
+2. В распакованном проекте зайти в директорию OA_FileManager/install/. В папке хранятся файлы для конфигурации приложения:
+Config.xml - конфигурация директорий для работы с файлами и времени сканирования файлов.
+hibernate.cfg.xml  - файл конфигурации подключения к базе данных.
+OA_scriptSQL.sql - sql скрипт для создания таблицы в базе PostgreSQL для обработанных файлов.
+  
+2.1. Конфигурация Config.xml:
+2.1.1 Открыть Config.xml любым текстовым редактором. В тегах  <patchInputFolder></patchInputFolder> прописать путь для создания директории в которую будут помещаться файлы для обработки. 
+Пример: Если необходимо что бы папка находилась в корне диска С тогда <patchInputFolder>C:/</patchInputFolder>.
+2.1.2  Аналогично прописать пути для папки с обработанными файлами и папки с файлами которые не обработаны соответственно:
+<patchOutputFolder>C:/</patchOutputFolder>	<patchErorFolder>C:/</patchErorFolder>.
+ 2.1.3. В тегах <timeUpdate></timeUpdate> прописать время сканирования файлов в миллисекундах. 
+Пример: <timeUpdate>1000</timeUpdate>  - для сканирования каждую секунду. Сохранить файл.
+
+2.2. Конфигурация hibernate.cfg.xml .
+Открыть  hibernate.cfg.xml  любым текстовым редактором. Прописать в теги 
+<property name="connection.driver_class">_</property>
+<property name="connection.url">_</property>
+<property name="connection.username">_</property>
+ <property name="connection.password">_</property>
+конфигурации базы, где будет хранится таблица обработанных данных. Сохранить файл.
+Пример:
+<property name="connection.driver_class">org.postgresql.Driver</property>
+<property name="connection.url">jdbc:postgresql://127.0.0.1:5432/postgres</property>
+<property name="connection.username">postgres</property>
+<property name="connection.password">123</property>
+
+2.3. Создание таблицы в Базе Данных.
+Запустить OA_scriptSQL.sql - sql скрипт для создания таблицы в базе PostgreSQL. Запуск можно осуществить или через командную строку или же через оболочку pgAdmin.
+
+ 3. Заменить файлы hibernate.cfg.xml в проекте:
+.\OA_FileManager\src\main\resources\hibernate.cfg.xml
+.\OA_FileManager\src\main\java\hibernate.cfg.xml 
+на отредактированный файл hibernate.cfg.xml из директории OA_FileManager/install\hibernate.cfg.xml.
+
+4. Открыть файл .\OA_FileManager\src\main\java\ProgramRun.java любым текстовым редактором. Заменить значение переменной configPatch в 15-ой строке файла на путь к отредактированному файлу  Config.xml. 
+Пример: private static final String configPatch = "OA_FileManager/install/Config.xml".
+Сохраните файл.
+
+5. Запустить файл gradlew.bat из корня проекта.
+
+6. Открыть командную строку и перейти в директорию проекта. 
+Пример: cd c:\ OA_FileManager\
+
+7. Выполнить команду ./gradlew build для сборки проекта.
+
+8. Распаковать архив с готовой сборкой для запуска находящегося  в директории .\OA_FileManager\build\distributions\ 
+
+9. В распакованном архиве перейти в каталог OA_FileManager/bin  и запустить OA_FileManager.bat 
+В результате создадутся директории по указанным путям и начнется сканирование директории OA_FileReader_Input_Files. В эту папку вручную поместить файлы для сканирования и обработки.
+Обработанные файлы в результате будут записываться в базу данных и перемещаться в директорию OA_FileReader_Output_Files. 
+Файлы которые не обработаны будут перемещаться в OA_FileReader_Error_Files.
+
+10. Для завершения сканирование закрыть окно программы.
+
+
+

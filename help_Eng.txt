@@ -1,0 +1,62 @@
+1. unzip the project "OA_FileManager".
+
+2. In the unpacked project go to the directory OA_FileManager/install/. The folder contains files for application configuration:
+Config.xml - configuration directory for the files, and scan-time.
+hibernate.cfg.xml - connection configuration file to the database.
+OA_scriptSQL.sql - sql script for creating the database tables for PostgreSQL processed files.
+  
+2.1. Configuration Config.xml:
+2.1.1  Open Config.xml using any text editor. The tag <patchInputFolder> </ patchInputFolder> set the path to create the directory in which the files will be placed for processing.
+Example: If you want to have that folder in the root of the drive C then <patchInputFolder>C:/</ patchInputFolder>.
+2.1.2 Similarly register path for the folder with the processed files and folders with files that are not handled appropriately:
+<patchOutputFolder>C:/</patchOutputFolder> 
+<patchErorFolder>C:/</patchErorFolder>.
+ 2.1.3. Write the tag <timeUpdate> </timeUpdate> to register the scan file in milliseconds.
+Example: <timeUpdate>1000</ timeUpdate> - to scan every second. Save file.
+
+2.2. Configuration hibernate.cfg.xml.
+Open hibernate.cfg.xml in any text editor. To register in tags
+<Property name = "connection.driver_class">_</property>
+<Property name = "connection.url">_</ property>
+<Property name = "connection.username">_</ property>
+ <Property name = "connection.password">_</ property>
+configuration database, where the table of the processed data will be stored. Save file.
+Example:
+<Property name = "connection.driver_class"> org.postgresql.Driver</ property>
+<Property name = "connection.url">jdbc:postgresql://127.0.0.1:5432/postgres</ property>
+<Property name = "connection.username">postgres</property>
+<Property name = "connection.password">123</ property>
+
+2.3. Create a table in the database.
+Start OA_scriptSQL.sql - sql script to create a table in the database PostgreSQL. Running can be done via the command line or through the shell pgAdmin.
+
+ 3. Replace hibernate.cfg.xml files in the project:
+.\OA_FileManager\src\main\resources\hibernate.cfg.xml
+.\ OA_FileManager\src\main\java\hibernate.cfg.xml
+edited on hibernate.cfg.xml file from OA_FileManager\install\hibernate.cfg.xml directory.
+
+4. Open the file .\OA_FileManager\src\main\java\ProgramRun.java  using any text editor. Replace the value of the variable in the 15th line of the file configPatch on the way to the edited the Config.xml file.
+Example: private static final String configPatch = "OA_FileManager/install/Config.xml".
+Save the file.
+
+5. Run the file gradlew.bat from the project root.
+
+6. Open a cmd and navigate to the project directory.
+Example: cd c:\OA_FileManager\
+
+7. Execute the command ./gradlew build to build the project.
+
+8. Unpack the archive with the ready to run assembly located in the directory .\OA_FileManager\ build\distributions\
+
+9. In unzip archive go to OA_FileManager/bin directory and run OA_FileManager.bat
+As a result, the directory will be created on the specified routes and start scanning OA_FileReader_Input_Files directory. In this folder manually place files for scanning and processing.
+Processed files will be saved as a result of the database and navigate to the directory OA_FileReader_Output_Files.
+Files that are not treated will move OA_FileReader_Error_Files.
+
+10. To complete the scan close the program window.
+
+
+
+
+
+

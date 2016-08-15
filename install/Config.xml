@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+        <configuration>
+       
+	<patchInputFolder>C:/pro2/</patchInputFolder>
+	<patchOutputFolder>C:/pro2/</patchOutputFolder>
+	<patchErorFolder>C:/pro2/</patchErorFolder>
+      	<timeUpdate>1000</timeUpdate>
+
+       </configuration> 

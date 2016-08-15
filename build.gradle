@@ -1,0 +1,52 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = 'ProgramRun'
+
+
+repositories {
+  mavenLocal()
+   mavenCentral()
+     flatDir{
+        dirs"/library"
+    }
+}
+
+jar {
+     manifest {
+        attributes 'Main-Class':'ProgramRun'
+}
+    baseName = 'OA_FileManager'
+    version =  '0.1.0'
+}
+
+dependencies {
+ 		compile group: 'org.hibernate', name: 'hibernate', version: '3.5.4-Final', ext: 'pom'
+
+compile files ('library/jta-1.1.jar',
+               'library/javaee.jar',
+               'library/q1112q.jar',
+               'library/ejb3-persistence.jar',
+               'library/commons-logging.jar',
+               'library/hibernate-commons-annotations.jar',
+               'library/hibernate-annotations.jar',
+               'library/slf4j-log4j12-1.5.3.jar',
+               'library/slf4j-api-1.5.3.jar',
+               'library/log4j-1.2.15.jar',
+               'library/javassist-3.4.GA.jar',
+               'library/hibernate3.jar',
+               'library/dom4j-1.6.1.jar',
+               'library/commons-collections-3.1.jar',
+               'library/antlr-2.7.6.jar',
+               'library/postgresql-9.4-1201.jdbc41.jar',
+               'library/hibernate-core-3.5.1-Final.jar',
+               'library/commons-lang-2.5.jar'
+               
+               
+              )
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
